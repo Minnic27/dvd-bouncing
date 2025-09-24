@@ -6,7 +6,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( 800,800 );
 document.body.appendChild( renderer.domElement );
 
-const geometry = new THREE.PlaneGeometry(0.4,0.3) ;
+const geometry = new THREE.PlaneGeometry(0.3,0.2) ;
 const material = new THREE.MeshBasicMaterial();
 const dvd = new THREE.Mesh( geometry, material );
 scene.add( dvd );
@@ -15,6 +15,8 @@ scene.add( dvd );
 let xSpeed = 0.0023;
 let ySpeed = 0.0043;
 let bounces = 8;
+const randX = THREE.MathUtils.randFloat(-0.8, 0.8);
+const randY = THREE.MathUtils.randFloat(-0.8, 0.8);
 
 // -------- F U N C T I O N S --------
 
@@ -34,7 +36,7 @@ function dvdSize()
 // decrement and print the variable 'bounces left'.
 function bouncesLeft()
 {
-    bounces -= 1;
+    bounces--;
     console.log("DVD BOUNCES LEFT: " + bounces);
 }
 
@@ -48,14 +50,17 @@ function stopMovement()
 }
 // -------- END OF FUNCTIONS --------
 
-camera.position.z = 5;
+// places camera in front of object [Orthographic]
+camera.position.z = 1;
 
-// default dvd position
-dvd.position.set(0,0,0);
+// dvd position
+//dvd.position.set(0,0); // starts at origin
+dvd.position.set(randX,randY); // starts in random position
 
 // starting dvd color
 randomColor();
 
+// --------- U P D A T E ---------
 function animate() {
 	requestAnimationFrame( animate );
 
